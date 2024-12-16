@@ -28,19 +28,8 @@ function renderNavigationHeader() {
   document.body.prepend(nav);
 }
 
-function renderFooter() {
-  const footerTemplate = `
-    Dimas Aji Wardhana - 2024
-  `;
-  const footer = document.createElement("footer");
-  footer.innerHTML = footerTemplate;
-  footer.setAttribute("class", "flex flex-row justify-center border-t-2");
-  document.body.append(footer);
-}
-
 function initialRender() {
   renderNavigationHeader();
-  renderFooter();
 }
 
 initialRender();
