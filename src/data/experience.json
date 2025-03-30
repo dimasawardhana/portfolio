@@ -1,0 +1,67 @@
+[
+  {
+    "role": "Software Engineer",
+    "company": "eFishery",
+    "location": "Bandung, Indonesia",
+    "yoe": 2,
+    "description": [
+      "Engineered responsive frontend interfaces with ReactJS, NextJS, Ant-Design, implementing reusable components which reduced development time up to 30%.",
+      "Implemented React Query within Refine.dev for optimized data fetching and caching, reducing unnecessary API calls by 70% and improving user experience.",
+      "Implemented React Suspense and lazy loading patterns for code splitting, reducing initial JavaScript payload by 65%.",
+      "Designed and built RESTful APIs using Golang, handling concurrent requests efficiently while maintaining code modularity and test coverage above 70%.",
+      "Implemented microservices architecture using RabbitMQ message queues.",
+      "Collaborated with cross-functional teams to gather requirements, plan sprints, and deliver features on schedule using Agile methodologies."
+    ],
+    "tags": [
+      "ReactJS",
+      "NextJS",
+      "Ant Design",
+      "React Query",
+      "Golang",
+      "RabbitMQ",
+      "REST API",
+      "Microservices",
+      "Agile"
+    ],
+    "startDate": "2023",
+    "endDate": "Present"
+  },
+  {
+    "role": "Software Engineer",
+    "company": "Mitrais",
+    "location": "Bandung, Indonesia",
+    "yoe": 2,
+    "description": [
+      "Implemented user profile management using React Context API, managing global user preferences and theme settings.",
+      "Built responsive navigation components using React and CSS Flexbox/Grid.",
+      "Developed automated testing strategy using Jest and React Testing Library, achieving at least 80% test coverage.",
+      "Ensured high code quality by integrating SonarQube into the development pipeline, enabling continuous code analysis and real-time feedback.",
+      "Collaborated with UI/UX team to implement designs from Figma."
+    ],
+    "tags": [
+      "ReactJS",
+      "Context API",
+      "CSS Flexbox",
+      "Jest",
+      "React Testing Library",
+      "SonarQube",
+      "UI/UX"
+    ],
+    "startDate": "2021",
+    "endDate": "2023"
+  },
+  {
+    "role": "Software Engineer",
+    "company": "PT LEN Industri",
+    "location": "Bandung, Indonesia",
+    "yoe": 1,
+    "description": [
+      "Developed and maintained RESTful APIs using Golang and Gin framework, handling basic CRUD operations for user management.",
+      "Implemented user authentication system using JWT tokens, ensuring secure access to application endpoints.",
+      "Built reusable React components for user dashboard using functional components and hooks."
+    ],
+    "tags": ["Golang", "Gin", "JWT", "React", "CRUD"],
+    "startDate": "2020",
+    "endDate": "2021"
+  }
+]

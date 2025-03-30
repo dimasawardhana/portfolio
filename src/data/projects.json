@@ -1,0 +1,16 @@
+[
+  {
+    "project_name": "Project 1",
+    "links": ["http://link1.com", "http://link2.com"],
+    "tech_stacks": ["Vue", "JavaScript", "CSS"],
+    "description": "Description for Project 1",
+    "image_urls": ["http://image1.com", "http://image2.com"]
+  },
+  {
+    "project_name": "Project 2",
+    "links": ["http://link3.com"],
+    "tech_stacks": ["React", "TypeScript", "HTML"],
+    "description": "Description for Project 2",
+    "image_urls": ["http://image3.com"]
+  }
+]

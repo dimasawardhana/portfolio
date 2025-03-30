@@ -1,0 +1,20 @@
+[
+  {
+    "id": "blog-1",
+    "tags": ["HTML", "CSS"],
+    "content": "This is the content of the first blog post. It contains more than 100 characters to test the MAX_CONTENT_LENGTH functionality. Let's add some more text to ensure it exceeds the limit.",
+    "published_date": "2023-01-01",
+    "status": "published",
+    "title": "How Browsers Render a Webpage",
+    "filepath": "@/assets/posts/blog-1.md"
+  },
+  {
+    "id": "blog-2",
+    "tags": ["VueJS", "JavaScript"],
+    "content": "This is the content of the second blog post. It also contains more than 100 characters to test the MAX_CONTENT_LENGTH functionality. Adding some extra text to make sure it goes beyond the limit.",
+    "published_date": "2023-02-01",
+    "status": "draft",
+    "title": "Understanding VueJS Lifecycle",
+    "filepath": "@/assets/posts/blog-2.md"
+  }
+]
