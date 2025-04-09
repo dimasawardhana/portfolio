@@ -11,7 +11,7 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
 <template>
   <div class="section">
     <div class="side-left">
-      <Cards id="profile-pic" title="About Me">
+      <Cards id="about-me" title="About Me">
         <AboutMe />
       </Cards>
       <div class="contacts">
@@ -32,12 +32,10 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: calc(100vh - v-bind(topbarHeight));
-
 }
 @media (min-width: 768px) {
   .section {
     grid-template-columns: 1fr 2fr;
-
   }
 }
 .contacts {
@@ -54,6 +52,6 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
   padding: 10px;
   display: grid;
   grid-template-rows: auto;
-  max-height: calc(100vh - v-bind(topbarHeight));;
+  max-height: calc(100vh - v-bind(topbarHeight));
 }
 </style>

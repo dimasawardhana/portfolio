@@ -49,7 +49,7 @@ onMounted(() => {
               :color="'blue'"
             />
           </div>
-          <button @click="router.push('/experience')" class="view-all-button">
+          <button @click="router.push('/about')" class="view-all-button">
             View all experiences →
           </button>
         </div>
@@ -84,7 +84,7 @@ onMounted(() => {
               :text="tech"
             />
           </div>
-          <button @click="router.push('/projects')" class="view-all-button">
+          <button @click="router.push('/project')" class="view-all-button">
             View all projects →
           </button>
         </div>

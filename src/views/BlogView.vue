@@ -10,7 +10,7 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
 const posts = ref(blogData as IBlog[])
 const searchQuery = ref('')
 const selectedTag = ref('')
-const selectedStatus = ref('')
+const selectedStatus = ref('published')
 
 const filteredPosts = computed(() => {
   return posts.value.filter((post) => {
