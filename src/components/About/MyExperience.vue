@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import experience from '@/data/experience.json'
-import { reactive } from 'vue'
+import { reactive, useTemplateRef, ref } from 'vue'
 import BadgeSet from '@/components/BadgeSet.vue'
+import ExperienceIndicator from './ExperienceIndicator.vue'
 
 const experience_ = reactive(experience)
+const experienceContainer = ref<HTMLElement | null>(null)
+
+const handleNavigate = (index: number) => {
+  if (experienceContainer.value) {
+    const itemWidth = experienceContainer.value.clientWidth
+    experienceContainer.value.scrollTo({
+      left: itemWidth * index,
+      behavior: 'smooth',
+    })
+  }
+}
 </script>
 
 <template>
   <h1 class="header">Work Experiences</h1>
-  <div class="experience-container">
+  <div class="experience-scrollbar">
+    <ExperienceIndicator :experiences="experience_" @navigate="handleNavigate" />
+  </div>
+  <div ref="experienceContainer" class="experience-container">
     <div v-for="(exp, index) in experience_" :key="index" class="experience-item">
       <h2>{{ exp.role }} at {{ exp.company }}</h2>
       <div class="tags">
@@ -24,31 +39,44 @@ const experience_ = reactive(experience)
 </template>
 
 <style lang="css" scoped>
+@media (min-width: 768px) {
+  .experience-container {
+    padding: 0 2rem;
+  }
+  .experience-item {
+    padding: 1em 4em;
+  }
+  .experience-item h2 {
+    text-align: justify;
+  }
+}
 .experience-container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: calc(100% - 100px);
+  scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  height: calc(100% - 200px);
   margin-top: 20px;
-  direction: rtl; /* Add this line */
+  flex-wrap: nowrap;
+  display: flex;
 }
 .experience-container::-webkit-scrollbar {
-  width: 2px; /* Adjust the width as needed */
-  background-color: #f5f5f5; /* Background color of the scrollbar */
+  width: 0px;
+  height: 0px;
+  background-color: #f5f5f5;
 }
 .experience-container::-webkit-scrollbar-thumb {
-  background-color: #888; /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
-  width: 20px;
+  background-color: #888;
+  border-radius: 15px;
+  width: 10px;
 }
 .experience-container::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Color of the scrollbar thumb on hover */
+  background-color: #555;
+  height: 10px;
 }
 .experience-item {
-  height: 100%;
   scroll-snap-align: start;
-  margin-bottom: 20px;
-  padding: 1em 4em;
-  direction: ltr; /* Add this line */
+  margin-right: 20px;
+  flex: 0 0 100%;
+  position: relative;
 }
 .experience-item p {
   margin-bottom: 20px;
@@ -56,12 +84,10 @@ const experience_ = reactive(experience)
 .tags {
   margin-bottom: 10px;
 }
-.tag-badge {
-  display: inline-block;
-  background-color: #e0e0e0;
-  border-radius: 12px;
-  padding: 5px 10px;
-  margin-right: 5px;
-  font-size: 12px;
+
+.experience-scrollbar {
+  margin-top: 1rem;
+  position: relative;
+  z-index: 1;
 }
 </style>

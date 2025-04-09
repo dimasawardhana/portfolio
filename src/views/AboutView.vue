@@ -30,8 +30,15 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
 <style>
 .section {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: auto;
   grid-template-rows: calc(100vh - v-bind(topbarHeight));
+
+}
+@media (min-width: 768px) {
+  .section {
+    grid-template-columns: 1fr 2fr;
+
+  }
 }
 .contacts {
   display: grid;
@@ -47,6 +54,6 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
   padding: 10px;
   display: grid;
   grid-template-rows: auto;
-  animation: fall-right 2s;
+  max-height: calc(100vh - v-bind(topbarHeight));;
 }
 </style>

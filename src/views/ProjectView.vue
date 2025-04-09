@@ -17,9 +17,14 @@ const projects = ref(projectsData as IProject[])
         class="project-item"
       >
         <img :src="project.image_urls[0]" alt="Project Thumbnail" class="project-thumbnail" />
-        <h2>
-          <a :href="project.links[0]">{{ project.project_name }}</a>
-        </h2>
+        <br />
+        <a :href="project.links[0]" target="_blank">
+          <button class="project-links">
+            <h2>
+              {{ project.project_name }}
+            </h2>
+          </button>
+        </a>
         <p>
           Tech Stacks:
           <BadgeSet
@@ -27,6 +32,10 @@ const projects = ref(projectsData as IProject[])
             :key="project.project_name + stack"
             :text="stack"
           />
+        </p>
+        <br />
+        <p>
+          {{ project.description }}
         </p>
       </ContentContainer>
     </div>
@@ -37,6 +46,11 @@ const projects = ref(projectsData as IProject[])
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+@media (max-width: 767px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
 }
 .project-item {
   text-align: center;
@@ -53,5 +67,18 @@ const projects = ref(projectsData as IProject[])
   border-radius: 12px;
   padding: 4px 8px;
   margin: 2px;
+}
+.project-links {
+  background: none;
+  border: none;
+  color: #63b3ed;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.project-links:hover {
+  text-decoration: underline;
 }
 </style>

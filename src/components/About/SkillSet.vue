@@ -13,15 +13,9 @@ import IconGolang from '../icons/IconGolang.vue'
     <div class="skill-set">
       <h3>Skills</h3>
       <div class="set">
-        <i>
-          <IconReact />
-        </i>
-        <i>
-          <IconNext />
-        </i>
-        <i>
-          <IconPostgresql />
-        </i>
+        <i><IconReact /></i>
+        <i><IconNext /></i>
+        <i><IconPostgresql /></i>
         <i><IconNodejs /></i>
         <i><IconTypescript /></i>
         <i><IconGolang /></i>
@@ -35,6 +29,7 @@ import IconGolang from '../icons/IconGolang.vue'
   display: grid;
   grid-template-columns: 1fr 3fr;
   align-items: center;
+  height: 100%;
 }
 .set {
   display: grid;

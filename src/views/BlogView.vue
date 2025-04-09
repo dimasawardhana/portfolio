@@ -33,48 +33,52 @@ const getPreviewContent = (content: string) => {
 </script>
 <template>
   <div class="content">
-    <ContentContainer id="posts" section-style="flex: 3;">
-      <div class="posts">
-        <div v-if="filteredPosts.length === 0" class="no-results">No results found.</div>
-        <div v-else v-for="post in filteredPosts" :key="post.published_date" class="post">
-          <h3 class="post-title">
-            <router-link
-              :to="{ name: 'PostDetail', params: { id: post.id } }"
-              class="post-title-link"
-              >{{ post.title }}</router-link
-            >
-          </h3>
-          <div class="tags">
-            <Badge v-for="tag in post.tags" :key="tag" :text="tag" />
-            <!-- Use Badge component -->
+    <div class="items">
+      <ContentContainer id="posts">
+        <div class="posts">
+          <div v-if="filteredPosts.length === 0" class="no-results">No results found.</div>
+          <div v-else v-for="post in filteredPosts" :key="post.published_date" class="post">
+            <h3 class="post-title">
+              <router-link
+                :to="{ name: 'PostDetail', params: { id: post.id } }"
+                class="post-title-link"
+                >{{ post.title }}</router-link
+              >
+            </h3>
+            <div class="tags">
+              <Badge v-for="tag in post.tags" :key="tag" :text="tag" />
+              <!-- Use Badge component -->
+            </div>
+            <p class="post-content">{{ getPreviewContent(post.content) }}</p>
+            <p class="post-meta">Published Date: {{ post.published_date }}</p>
+            <p class="post-meta">
+              Status:
+              <span
+                :class="{
+                  'status-published': post.status === 'published',
+                  'status-draft': post.status === 'draft',
+                }"
+              >
+                {{ post.status }}
+              </span>
+            </p>
           </div>
-          <p class="post-content">{{ getPreviewContent(post.content) }}</p>
-          <p class="post-meta">Published Date: {{ post.published_date }}</p>
-          <p class="post-meta">
-            Status:
-            <span
-              :class="{
-                'status-published': post.status === 'published',
-                'status-draft': post.status === 'draft',
-              }"
-            >
-              {{ post.status }}
-            </span>
-          </p>
         </div>
-      </div>
-    </ContentContainer>
-    <ContentContainer id="filters" section-style="flex: 1;">
-      <div class="filters">
-        <input v-model="searchQuery" type="text" placeholder="Search by title" class="input" />
-        <input v-model="selectedTag" type="text" placeholder="Filter by tag" class="input" />
-        <select v-model="selectedStatus" class="select">
-          <option value="">All statuses</option>
-          <option value="published">Published</option>
-          <option value="draft">Draft</option>
-        </select>
-      </div>
-    </ContentContainer>
+      </ContentContainer>
+    </div>
+    <div class="items">
+      <ContentContainer id="filters">
+        <div class="filters">
+          <input v-model="searchQuery" type="text" placeholder="Search by title" class="input" />
+          <input v-model="selectedTag" type="text" placeholder="Filter by tag" class="input" />
+          <select v-model="selectedStatus" class="select">
+            <option value="">All statuses</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+          </select>
+        </div>
+      </ContentContainer>
+    </div>
   </div>
 </template>
 
@@ -83,6 +87,26 @@ const getPreviewContent = (content: string) => {
   display: flex;
   height: calc(100vh - v-bind(topbarHeight) - 0.625rem);
   margin: 0.625rem 1rem;
+}
+.content .items:first-child {
+  flex: 3;
+}
+.content .items:last-child {
+  flex: 1;
+}
+@media (max-width: 767px) {
+  .content {
+    flex-direction: column-reverse;
+    overflow-y: auto;
+    justify-content: flex-end;
+    flex-basis: fit-content;
+  }
+  .content .items:first-child {
+    flex: 0 0 auto;
+  }
+  .content .items:last-child {
+    flex: 0 0 auto;
+  }
 }
 .posts {
   height: 100%; /* Set height to 100% */

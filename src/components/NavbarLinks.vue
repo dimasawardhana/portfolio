@@ -27,6 +27,8 @@ function toggleNav() {
 <style scoped>
 .topbar {
   display: grid;
+  position: sticky;
+  top: 0;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   animation: fall-in 0.7s;

@@ -5,9 +5,11 @@
 <script lang="ts" setup>
 import { defineProps } from 'vue'
 
-defineProps<{
-  text: string
+const {color} = defineProps<{
+  text: string, color?: string
 }>()
+
+const badgeColor = color ?? "#555"
 </script>
 
 <style scoped>
@@ -16,7 +18,7 @@ defineProps<{
   padding: 3px 7px;
   margin-right: 5px;
   border-radius: 12px;
-  background-color: #555;
+  background-color: v-bind(badgeColor);
   color: white;
   font-size: 0.75em;
 }
