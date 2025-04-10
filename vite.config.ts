@@ -7,7 +7,6 @@ import { plugin as markdown, Mode } from 'vite-plugin-markdown' // new import
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/portfolio/',
   plugins: [
     vue(),
     vueJsx(),

@@ -1,30 +1,59 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import router from '@/router'
+import { onUpdated, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const isActive = ref(true)
+const isInDashboard = ref(true)
 
 function toggleNav() {
   isActive.value = !isActive.value
 }
+
+const route = useRoute()
+
+watch(
+  () => route.fullPath,
+  (newPath) => {
+    console.log(newPath)
+    isInDashboard.value = true
+    if (newPath !== '/') isInDashboard.value = false
+  },
+)
 </script>
 
 <template>
-  <div class="topbar">
-    <nav class="nav" :class="{ left: !isActive, leftHidden: isActive }">
-      <RouterLink to="/"><i class="pi pi-home"></i></RouterLink>
-      <RouterLink to="/blog"><i class="pi pi-book"></i></RouterLink>
-    </nav>
-    <nav class="nav mid" @click="toggleNav">
-      <i class="pi pi-microsoft rotating-icon"></i>
-    </nav>
-    <nav class="nav" :class="{ right: !isActive, rightHidden: isActive }">
-      <RouterLink to="/about"><i class="pi pi-user"></i></RouterLink>
-      <RouterLink to="/project"><i class="pi pi-briefcase"></i></RouterLink>
-    </nav>
+  <div class="navbar">
+    <div class="nav" :class="{ hide: isInDashboard }">
+      <a @click="router.back()"><i class="pi pi-arrow-left"></i></a>
+    </div>
+    <div class="topbar">
+      <nav class="nav" :class="{ left: !isActive, leftHidden: isActive }">
+        <RouterLink to="/"><i class="pi pi-home"></i></RouterLink>
+        <RouterLink to="/blog"><i class="pi pi-book"></i></RouterLink>
+      </nav>
+      <nav class="nav mid" @click="toggleNav">
+        <i class="pi pi-microsoft rotating-icon"></i>
+      </nav>
+      <nav class="nav" :class="{ right: !isActive, rightHidden: isActive }">
+        <RouterLink to="/project"><i class="pi pi-briefcase"></i></RouterLink>
+        <RouterLink to="/about"><i class="pi pi-user"></i></RouterLink>
+      </nav>
+    </div>
+    <div class="nav">
+      <a><i class="pi pi-file-pdf"></i></a>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+.hide {
+  visibility: hidden;
+}
 .topbar {
   display: grid;
   position: sticky;
@@ -66,13 +95,13 @@ function toggleNav() {
   padding: 5px 15px;
   border-radius: 5px;
   box-shadow: whitesmoke 0px 0px 2px;
-  padding: 10px;
+  padding: 1em;
   transition: all 0.3s ease;
 }
 
 .nav i {
   color: white;
-  font-size: 1rem;
+  font-size: 1.25em;
   cursor: pointer;
   padding: 5px 10px;
   transition: rotate 0.3s;
@@ -85,6 +114,16 @@ function toggleNav() {
 .nav .rotating-icon:hover {
   color: var(--primary-color);
   rotate: 90deg;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0.25em;
+    margin: 5px;
+  }
+  .nav i {
+    font-size: 1em;
+  }
 }
 
 @keyframes fall-in {
