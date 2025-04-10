@@ -7,6 +7,7 @@ import projectsData from '@/data/projects.json'
 import ContentContainer from './ContentContainer.vue'
 import BadgeSet from './BadgeSet.vue'
 import SocialLinks from './About/SocialLinks.vue'
+import Greeting from './Greeting.vue'
 
 const router = useRouter()
 
@@ -32,10 +33,10 @@ onMounted(() => {
 
 <template>
   <div class="dashboard">
-    <h1 class="dashboard-title">Dashboard</h1>
+    <Greeting />
+    <h2>Look at what I've accomplished so far:</h2>
 
     <div class="dashboard-grid">
-      <!-- Latest Experience -->
       <ContentContainer title="Latest Experience">
         <div v-if="latestExperience" class="card-content">
           <h3 class="card-subtitle">{{ latestExperience.role }}</h3>

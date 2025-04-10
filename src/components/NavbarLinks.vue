@@ -9,7 +9,6 @@ const isInDashboard = ref(true)
 function toggleNav() {
   isActive.value = !isActive.value
 }
-
 const route = useRoute()
 
 watch(
@@ -41,7 +40,9 @@ watch(
       </nav>
     </div>
     <div class="nav">
-      <a><i class="pi pi-file-pdf"></i></a>
+      <a href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf" target="_blank"
+        ><i class="pi pi-file-pdf"></i
+      ></a>
     </div>
   </div>
 </template>
