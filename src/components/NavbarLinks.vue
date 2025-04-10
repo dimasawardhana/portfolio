@@ -24,23 +24,23 @@ watch(
 <template>
   <div class="navbar">
     <div class="nav" :class="{ hide: isInDashboard }">
-      <a @click="router.back()"><i class="pi pi-arrow-left"></i></a>
+      <a @click="router.back()" title="Back"><i class="pi pi-arrow-left"></i></a>
     </div>
     <div class="topbar">
       <nav class="nav" :class="{ left: !isActive, leftHidden: isActive }">
-        <RouterLink to="/"><i class="pi pi-home"></i></RouterLink>
-        <RouterLink to="/blog"><i class="pi pi-book"></i></RouterLink>
+        <RouterLink to="/" title="Dashboard"><i class="pi pi-home"></i></RouterLink>
+        <RouterLink to="/blog" title="Blog"><i class="pi pi-book"></i></RouterLink>
       </nav>
-      <nav class="nav mid" @click="toggleNav">
+      <nav class="nav mid" @click="toggleNav" title="Menu">
         <i class="pi pi-microsoft rotating-icon"></i>
       </nav>
       <nav class="nav" :class="{ right: !isActive, rightHidden: isActive }">
-        <RouterLink to="/project"><i class="pi pi-briefcase"></i></RouterLink>
-        <RouterLink to="/about"><i class="pi pi-user"></i></RouterLink>
+        <RouterLink to="/project" title="Projects"><i class="pi pi-briefcase"></i></RouterLink>
+        <RouterLink to="/about" title="About Me"><i class="pi pi-user"></i></RouterLink>
       </nav>
     </div>
     <div class="nav">
-      <a href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf" target="_blank"
+      <a href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf" target="_blank" title="Download CV"
         ><i class="pi pi-file-pdf"></i
       ></a>
     </div>
