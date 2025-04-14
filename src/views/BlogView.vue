@@ -36,33 +36,36 @@ const getPreviewContent = (content: string) => {
     <div class="items">
       <ContentContainer id="posts">
         <div class="posts">
-          <div v-if="filteredPosts.length === 0" class="no-results">No results found.</div>
-          <div v-else v-for="post in filteredPosts" :key="post.published_date" class="post">
-            <h3 class="post-title">
-              <router-link
-                :to="{ name: 'PostDetail', params: { id: post.id } }"
-                class="post-title-link"
-                >{{ post.title }}</router-link
-              >
-            </h3>
-            <div class="tags">
-              <Badge v-for="tag in post.tags" :key="tag" :text="tag" />
-              <!-- Use Badge component -->
-            </div>
-            <p class="post-content">{{ getPreviewContent(post.content) }}</p>
-            <p class="post-meta">Published Date: {{ post.published_date }}</p>
-            <p class="post-meta">
-              Status:
-              <span
-                :class="{
-                  'status-published': post.status === 'published',
-                  'status-draft': post.status === 'draft',
-                }"
-              >
-                {{ post.status }}
-              </span>
-            </p>
+          <div v-if="filteredPosts.length === 0" class="no-results">
+            <h2>No results found.</h2>
           </div>
+          <router-link
+            v-else
+            v-for="post in filteredPosts"
+            :key="post.published_date"
+            :to="{ name: 'PostDetail', params: { id: post.id } }"
+            class="post-link"
+          >
+            <div class="post">
+              <h3 class="post-title">{{ post.title }}</h3>
+              <div class="tags">
+                <Badge v-for="tag in post.tags" :key="tag" :text="tag" />
+              </div>
+              <p class="post-content">{{ getPreviewContent(post.content) }}</p>
+              <p class="post-meta">Published Date: {{ post.published_date }}</p>
+              <p class="post-meta">
+                Status:
+                <span
+                  :class="{
+                    'status-published': post.status === 'published',
+                    'status-draft': post.status === 'draft',
+                  }"
+                >
+                  {{ post.status }}
+                </span>
+              </p>
+            </div>
+          </router-link>
         </div>
       </ContentContainer>
     </div>
@@ -130,22 +133,30 @@ const getPreviewContent = (content: string) => {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
+.post-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 .post {
   margin-bottom: 20px;
   padding: 20px;
   border-radius: 8px;
-
-  color: #f9f9f9; /* Bright font color */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); */
+  color: #f9f9f9;
   transition:
     transform 0.3s,
     box-shadow 0.3s;
 }
-.post:hover {
+.post-link:hover .post {
   transform: translateY(-5px);
-  border: 1px solid #333; /* Darker border color */
-  background-color: #333; /* Dark background color */
+  border: 1px solid #333;
+  background-color: #333;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.post-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #fff;
 }
 .tags {
   margin-bottom: 10px;
@@ -158,13 +169,6 @@ const getPreviewContent = (content: string) => {
   background-color: #555; /* Darker background color */
   color: white;
   font-size: 0.75em; /* Smaller font size */
-}
-.post-title {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-}
-.post-title > a {
-  color: #fff;
 }
 .post-content {
   font-size: 1.1em;

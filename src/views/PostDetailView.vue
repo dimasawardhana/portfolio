@@ -7,7 +7,10 @@ import ContentContainer from '@/components/ContentContainer.vue'
 import { marked } from 'marked'
 import 'github-markdown-css' // import the CSS file
 
+type langType = 'ID' | 'EN'
+
 const route = useRoute()
+const activeLang = ref<langType>('ID')
 const postId = route.params.id as string
 const blog = blogData.find((p) => p.id === postId)
 const post = ref<IBlog>({
@@ -17,16 +20,19 @@ const post = ref<IBlog>({
   published_date: blog?.published_date || '',
   title: blog?.title || '',
   filepath: blog?.filepath || '',
+  filepathID: blog?.filepathID || '',
   id: blog?.id || '',
 })
 
 const postContent = ref<string>('') // initialize as empty string
 
 const files = import.meta.glob('@/assets/posts/*.md', { as: 'raw' }) // import as raw text
-onMounted(async () => {
+
+async function renderMD(lang: langType) {
   let content = ''
-  if (post.value?.filepath) {
-    const filePath = post.value.filepath.replace('@/assets/posts/', '/src/assets/posts/')
+  const _filePath = lang === 'ID' ? post.value?.filepathID : post.value?.filepath
+  if (_filePath) {
+    const filePath = _filePath.replace('@/assets/posts/', '/src/assets/posts/')
     const fileKey = `${filePath}`
 
     if (files[fileKey]) {
@@ -50,26 +56,70 @@ onMounted(async () => {
       `<img src="${window.location.origin}/picture/${filename}" alt="${filename}" />`,
   )
   postContent.value = content
+}
+onMounted(async () => {
+  renderMD(activeLang.value)
 })
+
+function changeLang(lang: 'ID' | 'EN') {
+  activeLang.value = lang
+}
 </script>
 
 <template>
   <ContentContainer id="post-detail" :title="post.title" section-style="margin: 1em">
     <div v-if="post">
-      <div class="tags">
-        <span v-for="tag in post.tags" :key="tag" class="badge">{{ tag }}</span>
+      <div class="meta">
+        <div class="tags">
+          <span v-for="tag in post.tags" :key="tag" class="badge">{{ tag }}</span>
+        </div>
+        <div class="lang">
+          <div
+            class="lang-option"
+            :class="{ activeOption: activeLang === 'ID' }"
+            @click="changeLang('ID')"
+          >
+            ID
+          </div>
+          <div
+            class="lang-option"
+            :class="{ activeOption: activeLang === 'EN' }"
+            @click="changeLang('EN')"
+          >
+            EN
+          </div>
+        </div>
       </div>
       <div class="post-content markdown-body" v-html="postContent"></div>
       <!-- use v-html to render HTML content with markdown-body class -->
       <p class="post-meta">Published Date: {{ post.published_date }}</p>
-      <p class="post-meta">Status: {{ post.status }}</p>
     </div>
     <div v-else class="no-results">Post not found.</div>
   </ContentContainer>
 </template>
 
 <style>
-/* Remove .post-detail class */
+img {
+  max-width: 100%;
+  height: auto;
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+}
+.lang {
+  display: flex;
+  justify-content: flex-end;
+}
+.lang-option {
+  padding: 5px 10px;
+}
+.lang-option:hover {
+  cursor: pointer;
+}
+.activeOption {
+  box-shadow: whitesmoke 0px 0px 2px;
+}
 .tags {
   margin-bottom: 10px;
 }

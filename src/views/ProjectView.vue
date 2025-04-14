@@ -16,7 +16,12 @@ const projects = ref(projectsData as IProject[])
         :key="project.project_name"
         class="project-item"
       >
-        <img :src="project.image_urls[0]" alt="Project Thumbnail" class="project-thumbnail" />
+        <img
+          loading="eager"
+          :src="project.image_urls[0]"
+          alt="Project Thumbnail"
+          class="project-thumbnail"
+        />
         <br />
         <a :href="project.links[0]" target="_blank">
           <button class="project-links">

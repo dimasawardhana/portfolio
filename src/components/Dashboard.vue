@@ -43,12 +43,7 @@ onMounted(() => {
           <p class="card-text">{{ latestExperience.company }}</p>
           <p class="card-date">{{ latestExperience.startDate }} - {{ latestExperience.endDate }}</p>
           <div class="tags-container">
-            <BadgeSet
-              v-for="tag in latestExperience.tags.slice(0, 3)"
-              :key="tag"
-              :text="tag"
-              :color="'blue'"
-            />
+            <BadgeSet v-for="tag in latestExperience.tags" :key="tag" :text="tag" :color="'blue'" />
           </div>
           <button @click="router.push('/about')" class="view-all-button">
             View all experiences →

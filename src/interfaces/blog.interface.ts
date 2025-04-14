@@ -6,4 +6,5 @@ export interface IBlog {
   status: 'published' | 'draft'
   title: string
   filepath: string // added filepath
+  filepathID: string
 }
