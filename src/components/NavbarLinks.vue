@@ -27,22 +27,24 @@ watch(
       <a @click="router.back()" title="Back"><i class="pi pi-arrow-left"></i></a>
     </div>
     <div class="topbar">
-      <nav class="nav" :class="{ left: !isActive, leftHidden: isActive }">
-        <RouterLink to="/" title="Dashboard"><i class="pi pi-home"></i></RouterLink>
+      <nav class="nav left">
+        <RouterLink to="/project" title="Projects"><i class="pi pi-briefcase"></i></RouterLink>
         <RouterLink to="/blog" title="Blog"><i class="pi pi-book"></i></RouterLink>
       </nav>
-      <nav class="nav mid" @click="toggleNav" title="Menu">
-        <i class="pi pi-microsoft rotating-icon"></i>
+      <nav class="nav mid">
+        <RouterLink to="/" title="Dashboard"><i class="pi pi-home"></i></RouterLink>
       </nav>
-      <nav class="nav" :class="{ right: !isActive, rightHidden: isActive }">
-        <RouterLink to="/project" title="Projects"><i class="pi pi-briefcase"></i></RouterLink>
+      <nav class="nav right">
         <RouterLink to="/about" title="About Me"><i class="pi pi-user"></i></RouterLink>
+        <a href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf" target="_blank" title="Download CV">
+          <i class="pi pi-file-pdf"></i>
+        </a>
       </nav>
     </div>
     <div class="nav">
-      <a href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf" target="_blank" title="Download CV"
-        ><i class="pi pi-file-pdf"></i
-      ></a>
+      <a title="Search">
+        <i class="pi pi-search"></i>
+      </a>
     </div>
   </div>
 </template>

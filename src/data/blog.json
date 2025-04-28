@@ -1,22 +1,12 @@
 [
   {
-    "id": "blog-1",
-    "tags": ["HTML", "CSS"],
-    "content": "Describing how browser render a webpage",
-    "published_date": "2023-01-01",
+    "id": "minimize-http-request",
+    "tags": ["Frontend", "Engineering", "React", "CSS", "NextJS", "JavaScript"],
+    "content": "Optimizing first load by minimizing HTTP Request",
+    "published_date": "2025-04-25",
     "status": "published",
-    "title": "How Browsers Render a Webpage",
-    "filepath": "@/assets/posts/blog-1.md",
-    "filepathID": "@/assets/posts/blog-1.md"
-  },
-  {
-    "id": "blog-2",
-    "tags": ["VueJS", "JavaScript"],
-    "content": "Explain about method that can be used in context of lifecycle of VueJS",
-    "published_date": "2023-02-01",
-    "status": "draft",
-    "title": "Understanding VueJS Lifecycle",
-    "filepath": "@/assets/posts/blog-2.md",
-    "filepathID": "@/assets/posts/blog-2.md"
+    "title": "Minimizing HTTP Request",
+    "filepath": "https://raw-github-apis.vercel.app/api/markdown/minimized-http-request/EN",
+    "filepathID": "https://raw-github-apis.vercel.app/api/markdown/minimized-http-request/ID"
   }
 ]

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import blogData from '@/data/blog.json'
 import type { IBlog } from '@/interfaces/blog.interface'
@@ -26,7 +26,7 @@ const post = ref<IBlog>({
 
 const postContent = ref<string>('') // initialize as empty string
 
-const files = import.meta.glob('@/assets/posts/*.md', { as: 'raw' }) // import as raw text
+const files = import.meta.glob('@/assets/posts/*.md', { query: '?raw' }) // import as raw text
 
 async function renderMD(lang: langType) {
   let content = ''
@@ -38,6 +38,15 @@ async function renderMD(lang: langType) {
     if (files[fileKey]) {
       try {
         const text = await files[fileKey]()
+        content = await marked(text as string)
+      } catch (error) {
+        console.error('Error fetching post content:', error)
+        content = await marked(post.value.content || '') // fallback to content field
+      }
+    }
+    if (filePath.includes('http')) {
+      try {
+        const text = await fetch(`${filePath}`).then((res) => res.text())
         content = await marked(text)
       } catch (error) {
         console.error('Error fetching post content:', error)
@@ -57,17 +66,19 @@ async function renderMD(lang: langType) {
   )
   postContent.value = content
 }
+
 onMounted(async () => {
   renderMD(activeLang.value)
 })
 
 function changeLang(lang: 'ID' | 'EN') {
   activeLang.value = lang
+  renderMD(lang)
 }
 </script>
 
 <template>
-  <ContentContainer id="post-detail" :title="post.title" section-style="margin: 1em">
+  <ContentContainer id="post-detail" :title="post.title" section-style="margin: 5em">
     <div v-if="post">
       <div class="meta">
         <div class="tags">
@@ -99,6 +110,15 @@ function changeLang(lang: 'ID' | 'EN') {
 </template>
 
 <style>
+.markdown-body pre {
+  background-color: rgb(40, 44, 52, 0.8) !important;
+}
+code {
+  font-family: Consolas, 'courier new';
+  color: #ff0000;
+  padding: 2px;
+  font-size: 105%;
+}
 img {
   max-width: 100%;
   height: auto;

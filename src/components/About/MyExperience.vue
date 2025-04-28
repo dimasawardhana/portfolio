@@ -61,12 +61,11 @@ const handleNavigate = (index: number) => {
 .experience-container::-webkit-scrollbar {
   width: 0px;
   height: 0px;
-  background-color: #f5f5f5;
 }
 .experience-container::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 15px;
-  width: 10px;
+  width: 0px;
 }
 .experience-container::-webkit-scrollbar-thumb:hover {
   background-color: #555;
