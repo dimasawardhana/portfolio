@@ -5,7 +5,7 @@ import AboutMe from '@/components/About/AboutMe.vue'
 import MyExperience from '@/components/About/MyExperience.vue'
 import SkillSet from '@/components/About/SkillSet.vue'
 
-const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
+const topbarHeight = `${document.querySelector('.navbar')?.scrollHeight || 0}px`
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const topbarHeight = `${document.querySelector('.topbar')?.scrollHeight || 0}px`
 .section {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: calc(100vh - v-bind(topbarHeight));
+  grid-template-rows: calc(100vh - calc(v-bind(topbarHeight) + 30px));
 }
 @media (min-width: 768px) {
   .section {

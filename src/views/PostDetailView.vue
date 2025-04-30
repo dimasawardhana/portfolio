@@ -26,6 +26,10 @@ const post = ref<IBlog>({
 
 const postContent = ref<string>('') // initialize as empty string
 
+const isMobileScreen = window.matchMedia('(max-width: 767px)').matches
+
+const tags = isMobileScreen ? post.value.tags.slice(0, 2) : post.value.tags
+
 const files = import.meta.glob('@/assets/posts/*.md', { query: '?raw' }) // import as raw text
 
 async function renderMD(lang: langType) {
@@ -78,11 +82,11 @@ function changeLang(lang: 'ID' | 'EN') {
 </script>
 
 <template>
-  <ContentContainer id="post-detail" :title="post.title" section-style="margin: 5em">
+  <ContentContainer id="post-detail" :title="post.title" section-style="margin: 2em">
     <div v-if="post">
       <div class="meta">
         <div class="tags">
-          <span v-for="tag in post.tags" :key="tag" class="badge">{{ tag }}</span>
+          <span v-for="tag in tags" :key="tag" class="badge">{{ tag }}</span>
         </div>
         <div class="lang">
           <div
@@ -120,7 +124,7 @@ code {
   font-size: 105%;
 }
 img {
-  max-width: 100%;
+  max-width: 100% !important;
   height: auto;
 }
 .meta {

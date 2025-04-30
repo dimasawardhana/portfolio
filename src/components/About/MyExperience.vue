@@ -63,13 +63,11 @@ const handleNavigate = (index: number) => {
   height: 0px;
 }
 .experience-container::-webkit-scrollbar-thumb {
-  background-color: #888;
   border-radius: 15px;
   width: 0px;
 }
 .experience-container::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-  height: 10px;
+  height: 0px;
 }
 .experience-item {
   scroll-snap-align: start;
