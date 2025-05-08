@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import router from '@/router'
-import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 // type
@@ -78,14 +78,19 @@ document.addEventListener('keydown', function (event) {
     // Your code to execute when Cmd + K is pressed
     toggleNav()
   }
+  if (event.key === 'Escape' && !navActive.value) {
+    navActive.value = true
+  }
 })
 </script>
 
 <template>
   <div :class="{ overlay: !navActive }">
     <nav class="navbar">
-      <div class="nav" :class="{ hide: isInDashboard || !navActive }">
-        <a @click="router.back()" title="Back"><i class="pi pi-arrow-left"></i></a>
+      <div class="nav">
+        <a :class="{ hide: isInDashboard || !navActive }" @click="router.back()" title="Back"
+          ><i class="pi pi-arrow-left"></i
+        ></a>
       </div>
       <div v-if="navActive" class="topbar">
         <nav class="nav left">
@@ -96,20 +101,26 @@ document.addEventListener('keydown', function (event) {
             </RouterLink>
           </div>
           <div class="item">
-            <RouterLink to="/blog" title="Blog"><i class="pi pi-book"></i></RouterLink>
-            <div class="label">Blog</div>
+            <RouterLink to="/blog" title="Blog">
+              <i class="pi pi-book"></i>
+              <div class="label">Blog</div>
+            </RouterLink>
           </div>
         </nav>
         <nav class="nav mid">
           <div class="item">
-            <RouterLink to="/" title="Dashboard"><i class="pi pi-home"></i></RouterLink>
-            <div class="label">Dashboard</div>
+            <RouterLink to="/" title="Dashboard">
+              <i class="pi pi-home"></i>
+              <div class="label">Dashboard</div>
+            </RouterLink>
           </div>
         </nav>
         <nav class="nav right">
           <div class="item">
-            <RouterLink to="/about" title="About Me"><i class="pi pi-user"></i></RouterLink>
-            <div class="label">About Me</div>
+            <RouterLink to="/about" title="About Me"
+              ><i class="pi pi-user"></i>
+              <div class="label">About Me</div>
+            </RouterLink>
           </div>
           <div class="item">
             <a
@@ -119,8 +130,8 @@ document.addEventListener('keydown', function (event) {
               title="Download CV"
             >
               <i class="pi pi-file-pdf"></i>
+              <div class="label">CV</div>
             </a>
-            <div class="label">CV</div>
           </div>
         </nav>
       </div>
@@ -214,9 +225,7 @@ document.addEventListener('keydown', function (event) {
 .item .label {
   display: none;
 }
-.item:hover .label {
-  display: flex;
-}
+
 .hide {
   visibility: hidden;
 }
@@ -300,6 +309,11 @@ document.addEventListener('keydown', function (event) {
     .cmd {
       display: none;
     }
+  }
+}
+@media (min-width: 768px) {
+  .item:hover .label {
+    display: flex;
   }
 }
 

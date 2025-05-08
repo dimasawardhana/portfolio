@@ -43,7 +43,7 @@ const getPreviewContent = (content: string) => {
             v-else
             v-for="post in filteredPosts"
             :key="post.published_date"
-            :to="{ name: 'PostDetail', params: { id: post.id } }"
+            :to="{ name: 'Blog Detail', params: { id: post.id } }"
             class="post-link"
           >
             <div class="post">
