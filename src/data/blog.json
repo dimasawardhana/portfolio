@@ -8,5 +8,15 @@
     "title": "Minimizing HTTP Request",
     "filepath": "https://raw-github-apis.vercel.app/api/markdown/minimized-http-request/EN",
     "filepathID": "https://raw-github-apis.vercel.app/api/markdown/minimized-http-request/ID"
+  },
+  {
+    "id": "otp-generated",
+    "tags": ["Backend", "Engineering", "JavaScript"],
+    "content": "Generating OTP by using secret, and data encryption key (DEK)",
+    "published_date": "2025-11-20",
+    "status": "published",
+    "title": "Generating OTP for TOTP(authenticator) and email",
+    "filepath": "https://raw-github-apis.vercel.app/api/markdown/otp-generated/EN",
+    "filepathID": "https://raw-github-apis.vercel.app/api/markdown/otp-generated/ID"
   }
 ]

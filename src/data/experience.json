@@ -1,6 +1,29 @@
 [
   {
     "role": "Software Engineer",
+    "company": "hyperscal",
+    "location": "Jakarta, Indonesia",
+    "yoe": 1,
+    "description": [
+      "Initiated the development of *a Multi-Factor Authentication (MFA) service (email + authenticator app)*, enhancing system security and identity management.",
+      "Built a *migration duplication validator*, ensuring 100% data consistency across microservices.",
+      "Developed a modular user management service with 85% test coverage, reducing feature onboarding time by 30%.",
+      "Established *integration testing pipelines* in Github Actions, boosting deployment reliability by 40% and cutting production issues by 25%."
+    ],
+    "tags": [
+      "Golang",
+      "Redis",
+      "PostgreSQL",
+      "WebSocket",
+      "REST API",
+      "Microservices",
+      "AWS"
+    ],
+    "startDate": "2025",
+    "endDate": "Present"
+  },
+  {
+    "role": "Software Engineer",
     "company": "eFishery",
     "location": "Bandung, Indonesia",
     "yoe": 2,
@@ -24,7 +47,7 @@
       "Agile"
     ],
     "startDate": "2023",
-    "endDate": "Present"
+    "endDate": "2025"
   },
   {
     "role": "Software Engineer",
@@ -60,7 +83,13 @@
       "Implemented user authentication system using JWT tokens, ensuring secure access to application endpoints.",
       "Built reusable React components for user dashboard using functional components and hooks."
     ],
-    "tags": ["Golang", "Gin", "JWT", "React", "CRUD"],
+    "tags": [
+      "Golang",
+      "Gin",
+      "JWT",
+      "React",
+      "CRUD"
+    ],
     "startDate": "2020",
     "endDate": "2021"
   }
