@@ -14,10 +14,10 @@ const topbarHeight = `${document.querySelector('.navbar')?.scrollHeight || 0}px`
       <Cards id="about-me" title="About Me">
         <AboutMe />
       </Cards>
+      <SkillSet />
       <div class="contacts">
         <Contacts />
       </div>
-      <SkillSet />
     </div>
     <div class="side-right">
       <Cards id="portfolio">

@@ -26,7 +26,7 @@ import Cards from '../ContentContainer.vue'
   </Cards>
   <Cards id="phone">
     <div class="centered">
-      <a href="tel:+6281235850354" target="_blank">
+      <a href="https://api.whatsapp.com/send/?phone=6281235850354&type=phone_number&app_absent=0" target="_blank">
         <i class="pi pi-whatsapp"></i>
       </a>
     </div>

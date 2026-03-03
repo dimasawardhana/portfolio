@@ -4,8 +4,11 @@ import { useRoute } from 'vue-router'
 import blogData from '@/data/blog.json'
 import type { IBlog } from '@/interfaces/blog.interface'
 import ContentContainer from '@/components/ContentContainer.vue'
-import { marked } from 'marked'
+import { Marked } from 'marked'
 import 'github-markdown-css' // import the CSS file
+import { markedHighlight } from 'marked-highlight'
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github-dark.css';
 
 type langType = 'ID' | 'EN'
 
@@ -32,7 +35,17 @@ const tags = isMobileScreen ? post.value.tags.slice(0, 2) : post.value.tags
 
 const files = import.meta.glob('@/assets/posts/*.md', { query: '?raw' }) // import as raw text
 
+const marked = new Marked(markedHighlight({
+	emptyLangClass: 'hljs',
+    langPrefix: 'hljs language-',
+    highlight(code, lang, info) {
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+      return hljs.highlight(code, { language }).value;
+    }
+  }))
+
 async function renderMD(lang: langType) {
+
   let content = ''
   const _filePath = lang === 'ID' ? post.value?.filepathID : post.value?.filepath
   if (_filePath) {
@@ -42,25 +55,25 @@ async function renderMD(lang: langType) {
     if (files[fileKey]) {
       try {
         const text = await files[fileKey]()
-        content = await marked(text as string)
+        content =  marked.parse(text as string)
       } catch (error) {
         console.error('Error fetching post content:', error)
-        content = await marked(post.value.content || '') // fallback to content field
+        content =  marked.parse(post.value.content || '') // fallback to content field
       }
     }
     if (filePath.includes('http')) {
       try {
         const text = await fetch(`${filePath}`).then((res) => res.text())
-        content = await marked(text)
+        content =  marked.parse(text)
       } catch (error) {
         console.error('Error fetching post content:', error)
-        content = await marked(post.value.content || '') // fallback to content field
+        content =  marked.parse(post.value.content || '') // fallback to content field
       }
     } else {
-      content = await marked(post.value.content || '') // fallback to content field
+      content =  marked.parse(post.value.content || '') // fallback to content field
     }
   } else {
-    content = await marked(post.value?.content || '') // use content field if filepath is not found
+    content =  marked.parse(post.value?.content || '') // use content field if filepath is not found
   }
 
   content.replace(
@@ -105,6 +118,9 @@ function changeLang(lang: 'ID' | 'EN') {
           </div>
         </div>
       </div>
+      <br />
+      <hr />
+      <br />
       <div class="post-content markdown-body" v-html="postContent"></div>
       <!-- use v-html to render HTML content with markdown-body class -->
       <p class="post-meta">Published Date: {{ post.published_date }}</p>
@@ -117,12 +133,12 @@ function changeLang(lang: 'ID' | 'EN') {
 .markdown-body pre {
   background-color: rgb(40, 44, 52, 0.8) !important;
 }
-code {
+/* code {
   font-family: Consolas, 'courier new';
   color: #ff0000;
   padding: 2px;
   font-size: 105%;
-}
+} */
 img {
   max-width: 100% !important;
   height: auto;

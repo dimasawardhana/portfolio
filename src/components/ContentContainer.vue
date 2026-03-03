@@ -16,7 +16,7 @@ defineProps(['id', 'title', 'sectionStyle'])
   box-shadow: whitesmoke 0px 0px 2px;
   background-color: rgb(40, 44, 52, 0.6);
   color: whitesmoke;
-  margin: 8px;
+  margin: 16px;
   padding: 20px;
   max-width: 100%;
   max-height: 100%;

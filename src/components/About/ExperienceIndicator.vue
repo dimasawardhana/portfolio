@@ -131,7 +131,11 @@ onUnmounted(() => {
 .timeline-item.active .timeline-dot {
   background-color: rgba(255, 255, 255, 0.9);
   border-color: rgba(255, 255, 255, 1);
-  transform: scale(1.2);
+  transform: scale(1.3);
+}
+
+.timeline-item.active .timeline-content {
+  top: -30px;
 }
 
 .date-range {
