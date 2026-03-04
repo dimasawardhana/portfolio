@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 
-const jobTitles = ['Software Engineer', 'Fullstack Engineer', 'Frontend Engineer']
+const jobTitles = ['Software Engineer', 'Fullstack Engineer', 'Backend Engineer']
 const currentTitle = ref('')
 const currentIndex = ref(0)
 const isDeleting = ref(false)
@@ -39,36 +39,59 @@ onMounted(() => {
 
 <template>
   <div class="greeting">
-    <h2 class="greeting-text">
+    <h1 class="greeting-intro">
       Hi, I am Dimas Aji Wardhana.
-      <span class="job-title">{{ currentTitle }}</span>
-      <span class="cursor">|</span>
-    </h2>
+    </h1>
+    <div class="greeting-title-wrapper">
+      <h2 class="greeting-job">
+        <span class="job-title">{{ currentTitle }}</span>
+        <span class="cursor">|</span>
+      </h2>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .greeting {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.greeting-text {
-  font-size: 3rem;
+.greeting-intro {
+  font-size: 2.5rem;
   font-weight: bold;
-  color: #e2e8f0;
+  color: var(--color-heading);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.greeting-title-wrapper {
+  /* This prevents the height from jumping when text wraps on smaller screens */
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.greeting-job {
+  font-size: 2rem;
+  font-weight: 500;
   margin: 0;
+  color: var(--color-text);
+  line-height: 1.2;
 }
 
 .job-title {
-  color: #63b3ed;
+  color: var(--primary-color);
 }
 
 .cursor {
   display: inline-block;
   width: 3px;
-  background-color: #63b3ed;
-  margin-left: 2px;
+  background-color: var(--primary-color);
+  margin-left: 4px;
   animation: blink 1s infinite;
+  vertical-align: text-bottom;
 }
 
 @keyframes blink {
@@ -78,6 +101,18 @@ onMounted(() => {
   }
   50% {
     opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .greeting-intro {
+    font-size: 2rem;
+  }
+  .greeting-job {
+    font-size: 1.5rem;
+  }
+  .greeting-title-wrapper {
+    min-height: 2.5rem;
   }
 }
 </style>

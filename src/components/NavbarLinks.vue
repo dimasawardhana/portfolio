@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import router from '@/router'
-import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 // type
 interface KBarItem {
   label: string
   type: string
-  onClick: (payload: MouseEvent) => void
+  onClick: (payload?: MouseEvent) => void
 }
 
-const navActive = ref(true)
-const isInDashboard = ref(true)
+const searchActive = ref(false)
 const searchText = ref('')
 const searchRef = useTemplateRef('searchRef')
 const route = useRoute()
@@ -22,7 +21,7 @@ const items: KBarItem[] = [
     type: 'Navigation',
     onClick: () => {
       router.replace('/')
-      navActive.value = true
+      searchActive.value = false
     },
   },
   {
@@ -30,7 +29,7 @@ const items: KBarItem[] = [
     type: 'Navigation',
     onClick: () => {
       router.replace('/about')
-      navActive.value = true
+      searchActive.value = false
     },
   },
   {
@@ -38,7 +37,7 @@ const items: KBarItem[] = [
     type: 'Navigation',
     onClick: () => {
       router.replace('/blog')
-      navActive.value = true
+      searchActive.value = false
     },
   },
   {
@@ -46,291 +45,304 @@ const items: KBarItem[] = [
     type: 'Navigation',
     onClick: () => {
       router.replace('/project')
-      navActive.value = true
+      searchActive.value = false
     },
   },
 ]
+
 const searchItems = computed(() =>
   items.filter((_item) => _item.label.toLowerCase().includes(searchText.value.toLowerCase())),
 )
 
 function toggleNav() {
-  const searchActive = navActive.value === true
-  navActive.value = !navActive.value
-  if (searchActive) {
+  searchActive.value = !searchActive.value
+  if (searchActive.value) {
     nextTick(() => {
       searchRef.value?.focus()
+      searchText.value = ''
     })
   }
 }
 
-watch(
-  () => route.fullPath,
-  (newPath) => {
-    isInDashboard.value = true
-    if (newPath !== '/') isInDashboard.value = false
-  },
-)
-
 document.addEventListener('keydown', function (event) {
   if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
     event.preventDefault()
-    // Your code to execute when Cmd + K is pressed
     toggleNav()
   }
-  if (event.key === 'Escape' && !navActive.value) {
-    navActive.value = true
+  if (event.key === 'Escape' && searchActive.value) {
+    searchActive.value = false
   }
 })
 </script>
 
 <template>
-  <div :class="{ overlay: !navActive }">
-    <nav class="navbar">
-      <div class="nav">
-        <a :class="{ hide: isInDashboard || !navActive }" @click="router.back()" title="Back"
-          ><i class="pi pi-arrow-left"></i
-        ></a>
-      </div>
-      <div v-if="navActive" class="topbar">
-        <nav class="nav left">
-          <div class="item">
-            <RouterLink to="/project" title="Projects">
-              <i class="pi pi-briefcase"></i>
-              <div class="label">Projects</div>
-            </RouterLink>
+  <!-- Floating Pill Navigation -->
+  <nav class="floating-nav">
+    <div class="nav-links">
+      <RouterLink to="/" title="Home" class="nav-item">
+        <i class="pi pi-home"></i><span class="desktop-only text-label">Home</span>
+      </RouterLink>
+      <RouterLink to="/about" title="About" class="nav-item">
+        <i class="pi pi-user"></i><span class="desktop-only text-label">About</span>
+      </RouterLink>
+      <RouterLink to="/project" title="Projects" class="nav-item">
+        <i class="pi pi-briefcase"></i><span class="desktop-only text-label">Projects</span>
+      </RouterLink>
+      <RouterLink to="/blog" title="Blog" class="nav-item">
+        <i class="pi pi-book"></i><span class="desktop-only text-label">Blog</span>
+      </RouterLink>
+      <div class="divider"></div>
+      <button @click="toggleNav" class="search-trigger" title="Search">
+        <i class="pi pi-search"></i>
+        <div class="cmd desktop-only">CTRL K</div>
+      </button>
+      <a href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf" target="_blank" title="CV" class="nav-item cv-item">
+        <i class="pi pi-file-pdf"></i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Command Palette Modal -->
+  <Teleport to="body">
+    <Transition name="fade">
+      <div v-if="searchActive" class="command-palette-backdrop" @click="searchActive = false">
+        <div class="command-palette" @click.stop>
+          <div class="search-header">
+            <i class="pi pi-search"></i>
+            <input 
+              type="text" 
+              placeholder="Search navigation..." 
+              v-model="searchText"
+              ref="searchRef"
+              @keydown.esc="searchActive = false"
+              autofocus
+            />
+            <button class="close-btn" @click="searchActive = false">ESC</button>
           </div>
-          <div class="item">
-            <RouterLink to="/blog" title="Blog">
-              <i class="pi pi-book"></i>
-              <div class="label">Blog</div>
-            </RouterLink>
+          <div class="search-results">
+            <div v-if="searchItems.length === 0" class="no-results">No results found</div>
+            <div v-for="item in searchItems" :key="item.label" class="search-item" @click="item.onClick">
+              <i class="pi pi-compass"></i>
+              <span class="item-type">{{ item.type }}:</span> 
+              <span class="item-label">{{ item.label }}</span>
+            </div>
           </div>
-        </nav>
-        <nav class="nav mid">
-          <div class="item">
-            <RouterLink to="/" title="Dashboard">
-              <i class="pi pi-home"></i>
-              <div class="label">Dashboard</div>
-            </RouterLink>
-          </div>
-        </nav>
-        <nav class="nav right">
-          <div class="item">
-            <RouterLink to="/about" title="About Me"
-              ><i class="pi pi-user"></i>
-              <div class="label">About Me</div>
-            </RouterLink>
-          </div>
-          <div class="item">
-            <a
-              ref="cv"
-              href="/Dimas_Aji_Wardhana_-_Software_Engineer.pdf"
-              target="_blank"
-              title="Download CV"
-            >
-              <i class="pi pi-file-pdf"></i>
-              <div class="label">CV</div>
-            </a>
-          </div>
-        </nav>
+        </div>
       </div>
-      <div class="search" v-else>
-        <input ref="searchRef" class="searchInput" v-model="searchText" />
-      </div>
-      <div class="nav">
-        <a v-if="navActive" title="Search" @click="toggleNav" class="searchBtn">
-          <i class="pi pi-search"></i>
-          <div class="cmd">CTRL + K</div>
-        </a>
-        <a v-else @click="toggleNav" title="close"><i class="pi pi-times"></i></a>
-      </div>
-    </nav>
-    <main v-if="!navActive" class="searchContent">
-      <div v-if="searchItems.length === 0" class="notFoundItem">Search not found</div>
-      <div v-for="item in searchItems" class="searchItem" @click="item.onClick">
-        {{ item.type }}: {{ item.label }}
-      </div>
-    </main>
-  </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
-.overlay {
+/* Floating Pill Navigation */
+.floating-nav {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 1000;
-}
-.cmd {
-  background-color: rgb(40, 44, 52, 0.6);
-  box-shadow: whitesmoke 0px 0px 2px;
-  padding: 0 0.25em;
-  border-radius: 5px;
-  font-size: 14px;
-  align-self: center;
-}
-.searchBtn {
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-background-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 0.5rem 0.5rem;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
-}
-.searchContent {
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-}
-.searchItem {
-  flex: 0 0 100%;
-  padding: 1em;
-  font-size: 20px;
-}
-.searchItem:hover {
-  cursor: pointer;
-  border: 1px solid #333;
-  background-color: #333;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transform: translateY(-10px);
-}
-.notFoundItem {
-  margin: auto;
-  padding: 2em;
-  font-size: 20px;
-}
-.search {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.4em;
-  animation: slide-in-left 0.5s;
-}
-.searchInput {
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px;
-  background-color: rgb(40, 44, 52, 0.6);
-  box-shadow: whitesmoke 0px 0px 2px;
-}
-.item {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.item .label {
-  display: none;
-}
-
-.hide {
-  visibility: hidden;
-}
-.topbar {
-  display: grid;
-  position: sticky;
-  top: 0;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  animation: slide-in-right 0.7s;
-}
-.mid {
-  z-index: 2;
-}
-.left {
-  justify-self: end;
-  opacity: 1;
-  z-index: 1;
-}
-.right {
-  justify-self: start;
-  opacity: 1;
-  z-index: 1;
-}
-.leftHidden {
-  justify-self: end;
-  transform: translate(70px, 0px);
-  visibility: hidden;
-  opacity: 0;
-}
-.rightHidden {
-  justify-self: start;
-  transform: translate(-70px, 0px);
-  visibility: hidden;
-  opacity: 0;
-}
-.nav {
-  border-radius: 5px;
-  display: flex;
-  width: fit-content;
-  padding: 1em;
   transition: all 0.3s ease;
 }
 
-.nav i {
-  color: white;
-  font-size: 1.25em;
-  cursor: pointer;
-  padding: 5px 10px;
-  transition: rotate 0.3s;
-}
-
-.nav a:hover {
+.nav-links {
   display: flex;
-  i,
-  .label {
-    color: var(--primary-color);
-  }
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.nav .rotating-icon:hover {
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--color-border);
+  margin: 0 0.5rem;
+}
+
+.nav-item, .search-trigger {
+  text-decoration: none;
+  color: var(--color-text);
+  padding: 0.6rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-item i {
+  font-size: 1.1rem;
+}
+
+.nav-item:hover, .search-trigger:hover, .nav-item.router-link-active {
+  background-color: var(--color-background-soft);
   color: var(--primary-color);
-  rotate: 90deg;
 }
 
-@media (max-width: 768px) {
-  .nav {
-    padding: 0.25em;
-    margin: 5px;
-  }
-  .nav i {
-    font-size: 1em;
-  }
-  .search {
-    padding: 0.5em;
-  }
-  .searchInput {
-    padding: 5px;
-  }
-  .searchBtn {
-    .cmd {
-      display: none;
-    }
-  }
+.cv-item {
+  color: var(--color-border-hover);
+  padding: 0.6rem;
 }
+
+.cmd {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.desktop-only {
+  display: none;
+}
+
 @media (min-width: 768px) {
-  .item:hover .label {
-    display: flex;
+  .desktop-only {
+    display: inline-flex;
   }
 }
 
-@keyframes slide-in-right {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+/* Command Palette Modal */
+.command-palette-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 15vh;
 }
-@keyframes slide-in-left {
-  0% {
-    transform: translateY(-10%);
-  }
-  100% {
-    transform: translateY(0);
-  }
+
+.command-palette {
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--color-background-glass);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  gap: 0.75rem;
+}
+
+.search-header i {
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+}
+
+.search-header input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  outline: none;
+}
+
+.close-btn {
+  background: var(--color-background-soft);
+  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.close-btn:hover {
+  opacity: 1;
+  background-color: var(--color-border);
+}
+
+.search-results {
+  padding: 0.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text);
+}
+
+.search-item i {
+  color: var(--primary-color);
+  opacity: 0.7;
+}
+
+.item-type {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.item-label {
+  font-weight: 500;
+}
+
+.search-item:hover {
+  background-color: var(--color-background-soft);
+  color: var(--primary-color);
+}
+
+.search-item:hover i {
+  opacity: 1;
+}
+
+.no-results {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 2rem 0;
+  font-size: 0.9rem;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

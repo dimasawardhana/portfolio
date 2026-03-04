@@ -12,27 +12,32 @@ defineProps(['id', 'title', 'sectionStyle'])
 
 <style scoped>
 .cards {
-  border-radius: 6px;
-  box-shadow: whitesmoke 0px 0px 2px;
-  background-color: rgb(40, 44, 52, 0.6);
-  color: whitesmoke;
-  margin: 16px;
-  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: var(--color-background-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--color-text);
+  margin: 0;
+  padding: 16px;
   max-width: 100%;
-  max-height: 100%;
-  overflow-y: auto;
 }
 .cards::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 .cards::-webkit-scrollbar-thumb {
-  background-color: #4f4f4f;
-  border-radius: 10px;
+  background-color: var(--color-border);
+  border-radius: 8px;
+}
+.cards::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border-hover);
 }
 .cards::-webkit-scrollbar-track {
-  background-color: #2d2d2d;
+  background-color: transparent;
 }
 .cards h1 {
   margin-bottom: 15px;
+  color: var(--color-heading);
 }
 </style>

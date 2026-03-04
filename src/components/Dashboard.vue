@@ -33,8 +33,10 @@ onMounted(() => {
 
 <template>
   <div class="dashboard">
-    <Greeting />
-    <h2>Look at what I've accomplished so far:</h2>
+    <div class="hero-section">
+      <Greeting />
+      <h2 class="dashboard-title">Look at what I've accomplished so far:</h2>
+    </div>
 
     <div class="dashboard-grid">
       <ContentContainer title="Latest Experience">
@@ -46,11 +48,12 @@ onMounted(() => {
             <BadgeSet v-for="tag in latestExperience.tags" :key="tag" :text="tag" :color="'blue'" />
           </div>
           <button @click="router.push('/about')" class="view-all-button">
-            View all experiences →
+            View all experiences <span>&rarr;</span>
           </button>
         </div>
         <p v-else class="no-data">No experience available</p>
       </ContentContainer>
+
       <!-- Latest Blog Post -->
       <ContentContainer title="Latest Blog Post">
         <div v-if="latestBlog" class="card-content">
@@ -62,7 +65,7 @@ onMounted(() => {
             <BadgeSet v-for="tag in latestBlog.tags" :key="tag" :text="tag" color="green" />
           </div>
           <button @click="router.push('/blog')" class="view-all-button">
-            View all blog posts →
+            View all blog posts <span>&rarr;</span>
           </button>
         </div>
         <p v-else class="no-data">No blog posts available</p>
@@ -81,41 +84,63 @@ onMounted(() => {
             />
           </div>
           <button @click="router.push('/project')" class="view-all-button">
-            View all projects →
+            View all projects <span>&rarr;</span>
           </button>
         </div>
         <p v-else class="no-data">No projects available</p>
       </ContentContainer>
 
-      <div class="social-links">
-        <SocialLinks />
-      </div>
+      <!-- Social Links (now wrapped in a card) -->
+      <ContentContainer title="Connect With Me">
+        <div class="social-links-wrapper">
+          <p class="card-text">Feel free to reach out for collaborations or just a friendly hello!</p>
+          <div class="social-links">
+            <SocialLinks />
+          </div>
+        </div>
+      </ContentContainer>
     </div>
   </div>
 </template>
 
 <style scoped>
+.hero-section {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1rem;
+}
+
+.social-links-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
 .social-links {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
+
 .dashboard {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 6.5rem 1rem 1rem 1rem;
 }
 
 .dashboard-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
-  color: #e2e8f0;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  color: var(--color-heading);
 }
 
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -127,48 +152,64 @@ onMounted(() => {
 .card-content {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .card-subtitle {
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.1rem;
   margin: 0;
-  color: #e2e8f0;
+  color: var(--color-heading);
 }
 
 .card-text {
-  color: #e2e8f0;
+  color: var(--color-text);
   margin: 0;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-date {
-  font-size: 0.875rem;
-  color: #a0aec0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
 .tags-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .view-all-button {
   background: none;
   border: none;
-  color: #63b3ed;
-  font-size: 0.875rem;
+  color: var(--primary-color);
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
   padding: 0;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto; 
+  padding-top: 0.5rem;
 }
 
-.view-all-button:hover {
-  text-decoration: underline;
+.view-all-button span {
+  transition: transform 0.2s ease;
+}
+
+.view-all-button:hover span {
+  transform: translateX(4px);
 }
 
 .no-data {
-  color: #a0aec0;
+  color: var(--color-text-muted);
   margin: 0;
 }
 </style>
