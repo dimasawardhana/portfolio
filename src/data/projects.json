@@ -7,5 +7,14 @@
     "image_urls": [
       "https://github.com/dimasawardhana/picture-cloud/blob/main/reach-alts-registration-form.png?raw=true"
     ]
+  },
+  {
+    "project_name": "",
+    "links": ["https://invest.reachalts.com.au/register"],
+    "tech_stacks": ["React", "JavaScript", "CSS", "Material-UI"],
+    "description": "Web application for investment, contributed as a frontend to build form registration and dashboard of portfolio",
+    "image_urls": [
+      "https://github.com/dimasawardhana/picture-cloud/blob/main/reach-alts-registration-form.png?raw=true"
+    ]
   }
 ]

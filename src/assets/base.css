@@ -1,58 +1,43 @@
-/* color palette from <https://github.com/vuejs/theme> */
+/* Muted Slate Teal Palette */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+  /* Backgrounds (Dark muted teal-gray) */
+  --bg-main: #162727;
+  --bg-surface: #1D3535;
+  --bg-subtle: #264A4A;
+  
+  /* Glass transparent surface for cards */
+  --bg-surface-transparent: rgba(29, 53, 53, 0.75); /* #1D3535 at 75% */
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
+  /* Text (Muted Soft White) */
+  --text-main: #DFEBE8;
+  --text-muted: #9BB3AF;
 
-  --vt-c-indigo: #2c3e50;
+  /* Accents */
+  --mint-accent: #4FD1C5;
+  --mint-hover: #319795;
+  --border-color: #2D5A5A;
 
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-
-  --bg-gradient-color: linear-gradient(90deg, #2c436f, #538698);
+  --bg-gradient-color: linear-gradient(135deg, var(--bg-main), var(--bg-surface));
 }
 
 /* semantic color variables for this project */
 :root {
   --color-background: var(--bg-gradient-color);
-  --color-background-soft: var(--vt-c-black-soft);
-  --color-background-mute: var(--vt-c-black-mute);
+  --color-background-soft: var(--bg-surface);
+  --color-background-mute: var(--bg-subtle);
+  --color-background-glass: var(--bg-surface-transparent);
 
-  --color-border: var(--vt-c-divider-dark-2);
-  --color-border-hover: var(--vt-c-divider-dark-1);
+  --color-border: var(--border-color);
+  --color-border-hover: var(--mint-accent);
 
-  --color-heading: var(--vt-c-text-dark-1);
-  --color-text: var(--vt-c-text-dark-1);
+  --color-heading: var(--text-main);
+  --color-text: var(--text-main);
+  --color-text-muted: var(--text-muted);
 
   --section-gap: 160px;
 
-  --primary-color: hsla(160, 100%, 37%, 1);
+  --primary-color: var(--mint-accent);
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
-} */
 
 *,
 *::before,
